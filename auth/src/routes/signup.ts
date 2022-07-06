@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { body, validationResult } from "express-validator";
+import { ErrorValidationRequest, ErrorDatabaseConnection } from "../utils/customError";
 
 const router = Router();
 
@@ -11,7 +12,10 @@ router.post(
   ],
   (req: Request, res: Response) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) throw Error(errors.array()[0].msg);
+    if (!errors.isEmpty()) throw new ErrorValidationRequest(errors.array());
+
+    // throw new ErrorDatabaseConnection("Database connection error");
+
     res.status(200).send("OK signup");
   }
 );
