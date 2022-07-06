@@ -1,7 +1,9 @@
-import express, { Express, Request, Response, NextFunction } from "express";
+import express, { Express } from "express";
+import "express-async-errors";
 
 import { signupRouter } from "./routes";
 import { errorHandler } from "./middleware/errorHandlers";
+import { ErrorNotFound } from "./utils/customError";
 
 const app: Express = express();
 
@@ -13,10 +15,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(signupRouter);
 
 // route not found
-app.use("*", (req, res) => {
-  res.status(404).send("Endpoint Not Found !");
+app.all("*", async () => {
+  throw new ErrorNotFound();
 });
 
+// error handler
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;

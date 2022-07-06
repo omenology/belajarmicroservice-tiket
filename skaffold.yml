@@ -6,9 +6,9 @@ build:
   # local:
   #   push: false
   googleCloudBuild:
-    projectId: ticketing-dev-355304
+    projectId: belajar-microservice
   artifacts:
-    - image: asia.gcr.io/ticketing-dev-355304/auth
+    - image: asia.gcr.io/belajar-microservice/auth
       context: auth
       docker:
         dockerfile: Dockerfile

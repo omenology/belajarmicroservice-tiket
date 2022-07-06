@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: asia.gcr.io/ticketing-dev-355304/auth
+          image: asia.gcr.io/belajar-microservice/auth
 ---
 apiVersion: v1
 kind: Service
