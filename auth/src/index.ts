@@ -1,5 +1,6 @@
 import express, { Express } from "express";
 import "express-async-errors";
+import mongoose from "mongoose";
 
 import { signupRouter } from "./routes";
 import { errorHandler } from "./middleware/errorHandlers";
@@ -24,6 +25,16 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`app listening on ${PORT} | last restart : ${new Date()}`);
-});
+const start = async () => {
+  try {
+    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.log(err);
+  }
+  app.listen(PORT, () => {
+    console.log(`app listening on ${PORT} | last restart : ${new Date()}`);
+  });
+};
+
+start()
