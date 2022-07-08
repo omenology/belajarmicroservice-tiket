@@ -52,3 +52,15 @@ export class ErrorNotFound extends CustomError {
     return [{ title: "Not found", message: "Endpoint Not found" }];
   };
 }
+
+export class ErrorBadRequest extends CustomError {
+  public statusCode = 400;
+  constructor(public message: string) {
+    super(message || "Bad Request");
+    Object.setPrototypeOf(this, ErrorBadRequest.prototype);
+  }
+
+  serializeError = () => {
+    return [{ title: "Bad Request", message: this.message }];
+  };
+}

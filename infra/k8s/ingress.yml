@@ -10,6 +10,13 @@ spec:
     - host: myappdev.com
       http:
         paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mongo-express-srv
+                port:
+                  number: 8081
           - path: /api/users/?(.*)
             pathType: Prefix
             backend:
@@ -17,3 +24,5 @@ spec:
                 name: auth-srv
                 port:
                   number: 3000
+          
+          

@@ -27,14 +27,20 @@ const PORT = process.env.PORT || 3000;
 
 const start = async () => {
   try {
-    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth");
+    await mongoose.connect("mongodb://auth-mongo-srv:27017", {
+      auth: {
+        username: "root",
+        password: "password",
+      },
+      dbName: "auth",
+    });
     console.log("Connected to MongoDB");
+    app.listen(PORT, () => {
+      console.log(`app listening on ${PORT} | last restart : ${new Date()}`);
+    });
   } catch (err) {
     console.log(err);
   }
-  app.listen(PORT, () => {
-    console.log(`app listening on ${PORT} | last restart : ${new Date()}`);
-  });
 };
 
-start()
+start();

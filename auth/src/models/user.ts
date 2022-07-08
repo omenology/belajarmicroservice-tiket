@@ -1,8 +1,20 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document, Model } from "mongoose";
+import { PasswordHooks } from "../utils/passwordHooks";
 
-interface userAttrType {
+interface userAttr {
   email: string;
   password: string;
+}
+
+interface userDocument extends Document {
+  email: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface userModel extends Model<userDocument> {
+  build(attrs: userAttr): userDocument;
 }
 
 const userSchema = new Schema({
@@ -16,9 +28,18 @@ const userSchema = new Schema({
   },
 });
 
-const User = model("User", userSchema);
-const buildUser = (attr: userAttrType) => {
-  return new User(attr);
+userSchema.statics.build = (attrs: userAttr) => {
+  return new User(attrs);
 };
+
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    const hashedPassword = await PasswordHooks.hashPassword(this.get("password"));
+    this.set("password", hashedPassword);
+  }
+  next();
+});
+
+const User = model<userDocument, userModel>("User", userSchema);
 
 export { User };

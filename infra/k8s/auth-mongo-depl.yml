@@ -15,6 +15,12 @@ spec:
       containers:
         - name: mongo
           image: mongo
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: "root"
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "password"
+
 ---
 apiVersion: v1
 kind: Service
