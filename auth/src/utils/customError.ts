@@ -55,8 +55,9 @@ export class ErrorNotFound extends CustomError {
 
 export class ErrorBadRequest extends CustomError {
   public statusCode = 400;
-  constructor(public message: string) {
+  constructor(public message: string, code?: number) {
     super(message || "Bad Request");
+    if(code) this.statusCode = code;
     Object.setPrototypeOf(this, ErrorBadRequest.prototype);
   }
 

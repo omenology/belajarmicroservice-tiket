@@ -1,10 +1,8 @@
 import { Router } from "express";
-import { signupRouter } from "./signup";
-import {signinRouter} from './signin'
+import { userRoutes } from "./users";
 
-const router = Router({mergeParams: true});
+const router = Router({ mergeParams: true });
 
-router.use("/api/users/signup", signupRouter);
-router.use("/api/users/signin", signinRouter);
+router.use("/api/users/", userRoutes);
 
 export default router;
