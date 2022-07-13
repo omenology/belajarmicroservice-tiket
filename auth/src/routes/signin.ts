@@ -3,26 +3,23 @@ import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
 import { requestValidation } from "../middleware";
-import { ErrorBadRequest } from "../utils";
+import { ErrorBadRequest, PasswordHooks } from "../utils";
 import { UserModel } from "../models";
 
-const router = Router({mergeParams: true});
+const router = Router({ mergeParams: true });
 
 router.post(
   "/",
-  [
-    body("email").isEmail().withMessage("Please enter a valid email"),
-    body("password").trim().isLength({ min: 4, max: 20 }).withMessage("Password must be between 4 and 20 characters"),
-  ],
+  [body("email").isEmail().withMessage("Please enter a valid email"), body("password").trim().notEmpty().withMessage("Password required")],
   requestValidation,
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    const isExist = await UserModel.findOne({ email });
-    if (isExist) throw new ErrorBadRequest("Email already exist");
+    const user = await UserModel.findOne({ email });
+    if (!user) throw new ErrorBadRequest("Invalid credentials");
 
-    const user = new UserModel({ email, password });
-    await user.save();
+    const isMatch = await PasswordHooks.comparePassword(user.password, password);
+    if (!isMatch) throw new ErrorBadRequest("Invalid credentials");
 
     const token = jwt.sign(
       {
@@ -36,7 +33,7 @@ router.post(
       token,
     };
 
-    res.status(201).send({
+    res.status(200).send({
       data: {
         type: "user",
         id: user.id,
@@ -46,4 +43,4 @@ router.post(
   }
 );
 
-export { router as signupRouter };
+export { router as signinRouter };

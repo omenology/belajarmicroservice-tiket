@@ -3,7 +3,7 @@ import "express-async-errors";
 import mongoose from "mongoose";
 import cookieSession from "cookie-session";
 
-import { signupRouter } from "./routes";
+import routes from "./routes";
 import { errorHandler } from "./middleware";
 import { ErrorNotFound } from "./utils";
 
@@ -23,7 +23,7 @@ app.use(
 );
 
 // routes enrty
-app.use(signupRouter);
+app.use(routes);
 
 // route not found
 app.all("*", async () => {
