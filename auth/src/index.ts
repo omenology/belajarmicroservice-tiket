@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 import cookieSession from "cookie-session";
 
 import { signupRouter } from "./routes";
-import { errorHandler } from "./middleware/errorHandlers";
-import { ErrorNotFound } from "./utils/customError";
+import { errorHandler } from "./middleware";
+import { ErrorNotFound } from "./utils";
 
 const app: Express = express();
 app.set("trust proxy", true);
