@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
-import { requestValidation } from "../middleware";
+import { requestValidation, isAuth } from "../middleware";
 import { ErrorBadRequest, PasswordHooks } from "../utils";
 import { UserModel } from "../models";
 
@@ -81,20 +81,13 @@ router.post(
   }
 );
 
-router.get("/currentuser", async (req: Request, res: Response) => {
-  if (!req.session?.token) throw new ErrorBadRequest("Unauthorized", 401);
-
-  try {
-    const payload = jwt.verify(req.session.token, process.env.JWT_KEY!);
-    res.status(200).send({
-      data: {
-        type: "user",
-        attributes: payload,
-      },
-    });
-  } catch (error) {
-    throw new ErrorBadRequest("Token err");
-  }
+router.get("/currentuser", isAuth, async (req: Request, res: Response) => {
+  res.status(200).send({
+    data: {
+      type: "user",
+      attributes: req.decoded,
+    },
+  });
 });
 
 router.post("/logout", async (req: Request, res: Response) => {
