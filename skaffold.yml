@@ -21,3 +21,5 @@ deploy:
   kubectl:
     manifests:
       - infra/k8s/*
+
+# kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf

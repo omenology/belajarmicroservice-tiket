@@ -1,16 +1,26 @@
 import express, { Express } from "express";
 import "express-async-errors";
 import mongoose from "mongoose";
+import cookieSession from "cookie-session";
 
 import { signupRouter } from "./routes";
 import { errorHandler } from "./middleware/errorHandlers";
 import { ErrorNotFound } from "./utils/customError";
 
 const app: Express = express();
+app.set("trust proxy", true);
 
 /* Use body parser */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// cookie
+app.use(
+  cookieSession({
+    secure: true,
+    signed: false,
+  })
+);
 
 // routes enrty
 app.use(signupRouter);
@@ -26,6 +36,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 3000;
 
 const start = async () => {
+  if (!process.env.JWT_KEY) throw new Error("JWT_KEY must be defind");
   try {
     await mongoose.connect("mongodb://auth-mongo-srv:27017", {
       auth: {
