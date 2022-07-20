@@ -27,3 +27,19 @@ describe("test signup user", () => {
     expect(response.get("Set-Cookie")).toBeDefined();
   });
 });
+
+describe("test signin user", () => {
+  test.each([
+    { body: { email: "", password: "" }, expected: 400 },
+    { body: { email: "emial@mail.com", password: "" }, expected: 400 },
+    { body: { email: "", password: "123456" }, expected: 400 },
+    { body: { email: "email@mail.com", password: "123456" }, expected: 400 },
+    { body: { email: "emailmail.com", password: "123456" }, expected: 400 },
+    { body: { email: "email@mail.com", password: "password" }, expected: 200 },
+  ])("returns $expected when email: '$body.email' and password: '$body.password'", async (dataTest) => {
+    const response = await request(app).post("/api/users/signin").send(dataTest.body).expect(dataTest.expected);
+    if (dataTest.expected === 200) {
+      expect(response.get("Set-Cookie")).toBeDefined();
+    }
+  });
+});
