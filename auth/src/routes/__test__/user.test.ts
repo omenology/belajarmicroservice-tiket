@@ -56,3 +56,14 @@ it("test signout user", async () => {
 
   expect(response.get("Set-Cookie")[0]).toEqual("session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly");
 });
+
+it("test get current user", async () => {
+  const cookie = await global.signin();
+  const response = await request(app).get("/api/users/currentuser").set("Cookie", cookie).send().expect(200);
+  expect(response.body.data.attributes.email).toEqual("email@mail.com");
+});
+
+it("test get current user with no cookie", async () => {
+  const response = await request(app).get("/api/users/currentuser").send().expect(401);
+  expect(response.body.errors[0].message).toEqual("Unauthorized");
+})
