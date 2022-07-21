@@ -90,7 +90,7 @@ router.get("/currentuser", isAuth, async (req: Request, res: Response) => {
   });
 });
 
-router.post("/logout", async (req: Request, res: Response) => {
+router.post("/signout", async (req: Request, res: Response) => {
   req.session = null;
   res.status(200).send({
     data: {
