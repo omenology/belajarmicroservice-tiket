@@ -16,10 +16,17 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: asia.gcr.io/belajar-microservice/client
+      context: client/ticketing
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.ts"
+            dest: .
 
 deploy:
   kubectl:
     manifests:
       - infra/k8s/*
-
 # kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
