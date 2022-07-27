@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 import Router from "next/router";
 import useRequest from "../../utils/hooks/useRequest";
+import Err from "../../components/err";
 
 const Signup = () => {
   const [email, setEmail] = useState<string>("");
@@ -32,7 +33,7 @@ const Signup = () => {
         <label>Password</label>
         <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" />
       </div>
-      {errors}
+      {errors && <Err err={errors} />}
       <button className="btn btn-primary">Sign Up</button>
     </form>
   );

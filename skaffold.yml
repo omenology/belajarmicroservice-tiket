@@ -21,12 +21,13 @@ build:
       docker:
         dockerfile: Dockerfile
       sync:
-        manual:
-          - src: "**/*.ts"
-            dest: .
+        infer:
+          - "**/*.ts"
+          - "**/*.tsx"
+          - "**/*.css"
 
 deploy:
   kubectl:
     manifests:
-      - infra/k8s/*
+      - infra/k8s/*.yml
 # kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
