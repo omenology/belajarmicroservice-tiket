@@ -1,10 +1,15 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+
 // import "bootstrap/dist/js/bootstrap.min.js";
 
-import type { AppProps } from "next/app";
+import type { AppProps, AppContext } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return <Component {...pageProps} />;
-}
+};
+
+MyApp.getInitialProps = async ({ Component, ctx }: AppContext) => {
+  return {};
+};
 
 export default MyApp;
