@@ -5,7 +5,7 @@ import Link from "next/link";
 const Header = ({ currentUser }: { currentUser: any }) => {
   const { doRequest, errors } = useRequest({
     url: "/api/users/signout",
-    method: "get",
+    method: "post",
     body: {},
     onSuccess: () => Router.push("/"),
   });

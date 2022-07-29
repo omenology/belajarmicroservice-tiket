@@ -7,6 +7,7 @@ import Header from "../components/header";
 import buildClinet from "../utils/buildClient";
 
 const MyApp = ({ Component, pageProps, currentUser, headers }: AppProps & { currentUser: any; headers: any }) => {
+  console.log(currentUser);
   return (
     <div>
       <Header currentUser={currentUser} />
