@@ -2,8 +2,8 @@ import { Router, Request, Response } from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
-import { requestValidation, isAuth } from "../middleware";
-import { ErrorBadRequest, PasswordHooks } from "../utils";
+import { requestValidation, isAuth, ErrorBadRequest } from "@omnlgy/common";
+import { PasswordHooks } from "../utils";
 import { UserModel } from "../models";
 
 const router = Router({ mergeParams: true });
