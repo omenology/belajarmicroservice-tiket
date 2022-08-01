@@ -3,7 +3,7 @@ import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
 import { requestValidation, isAuth, ErrorBadRequest } from "@omnlgy/common";
-import { PasswordHooks } from "../utils";
+import { PasswordHooks } from "../utils/passwordHooks";
 import { UserModel } from "../models";
 
 const router = Router({ mergeParams: true });

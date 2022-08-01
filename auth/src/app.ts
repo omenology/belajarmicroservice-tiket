@@ -3,8 +3,7 @@ import "express-async-errors";
 import cookieSession from "cookie-session";
 
 import routes from "./routes";
-import { ErrorNotFound } from "./utils";
-import { errorHandler } from "@omnlgy/common";
+import { errorHandler, ErrorNotFound } from "@omnlgy/common";
 
 const app: Express = express();
 app.set("trust proxy", true);
