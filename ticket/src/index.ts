@@ -11,7 +11,7 @@ const start = async () => {
         username: "root",
         password: "password",
       },
-      dbName: "auth",
+      dbName: "ticket",
     });
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {

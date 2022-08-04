@@ -25,6 +25,14 @@ build:
           - "**/*.ts"
           - "**/*.tsx"
           - "**/*.css"
+    - image: asia.gcr.io/belajar-microservice/ticket
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
 
 deploy:
   kubectl:
