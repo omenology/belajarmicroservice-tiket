@@ -3,6 +3,7 @@ import "express-async-errors";
 import cookieSession from "cookie-session";
 
 import { errorHandler, ErrorNotFound } from "@omnlgy/common";
+import router from "./routes";
 
 const app: Express = express();
 app.set("trust proxy", true);
@@ -20,7 +21,7 @@ app.use(
 );
 
 // routes enrty
-app.use();
+app.use(router);
 
 // route not found
 app.all("*", async () => {
