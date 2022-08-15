@@ -23,7 +23,7 @@ router.post(
 
     const user = new UserModel({ email, password });
     await user.save();
-
+    
     const token = jwt.sign(
       {
         id: user.id,

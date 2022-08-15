@@ -17,23 +17,28 @@ interface userModel extends Model<userDocument> {
   build(attrs: userAttr): userDocument;
 }
 
-const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
+const userSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-},{timestamps: true,toJSON:{
-  transform(doc,ret){
-    delete ret._id;
-    delete ret._id;
-    delete ret.__v;
-    delete ret.password;
+  {
+    timestamps: true,
+    toJSON: {
+      transform(doc, ret) {
+        delete ret._id;
+        delete ret.__v;
+        delete ret.password;
+      },
+    },
   }
-}});
+);
 
 userSchema.statics.build = (attrs: userAttr) => {
   return new User(attrs);
