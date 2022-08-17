@@ -26,7 +26,7 @@ build:
           - "**/*.tsx"
           - "**/*.css"
     - image: asia.gcr.io/belajar-microservice/ticket
-      context: auth
+      context: ticket
       docker:
         dockerfile: Dockerfile
       sync:

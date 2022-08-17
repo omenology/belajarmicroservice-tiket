@@ -25,6 +25,7 @@ app.use(router);
 
 // route not found
 app.all("*", async () => {
+  console.log("tiket")
   throw new ErrorNotFound();
 });
 
