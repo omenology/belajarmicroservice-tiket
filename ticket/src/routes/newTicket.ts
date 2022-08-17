@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { body } from "express-validator";
-import { requestValidation, isAuth, ErrorBadRequest } from "@omnlgy/common";
+import { requestValidation, isAuth } from "@omnlgy/common";
 import { Ticket } from "../models/ticket";
 
 const router = Router({ mergeParams: true });
