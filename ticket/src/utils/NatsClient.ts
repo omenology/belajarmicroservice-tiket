@@ -1,20 +1,26 @@
 import nats, { Stan } from "node-nats-streaming";
-export class NatsClient {
-  private static stan?: Stan;
+class NatsClient {
+  private _client?: Stan;
 
-  constructor(clusterId: string, clientId: string, url: string) {
-    if (!NatsClient?.stan) {
-      NatsClient.stan = nats.connect(clusterId, clientId, { url });
-      NatsClient.stan.on("connect", () => {
-        console.log("Nats connection established");
-      });
-      NatsClient.stan.on("error", (err) => {
-        throw Error(err);
-      });
-    } else console.log("Nats connection established");
+  get client() {
+    if (!this._client) throw new Error("Cannot access NATS client before connecting");
+    return this._client;
   }
-  getStan() {
-    if (NatsClient.stan) return NatsClient.stan;
-    else throw Error("Nats clinet not declare ");
+
+  connect(clusterId: string, clientId: string, url: string) {
+    this._client = nats.connect(clusterId, clientId, { url });
+
+    return new Promise<void>((resolve, reject) => {
+      this.client.on("connect", () => {
+        console.log("Connected to NATS");
+        resolve();
+      });
+      this.client.on("error", (err) => {
+        reject(err);
+      });
+    });
+    
   }
 }
+
+export const natsClient = new NatsClient();
