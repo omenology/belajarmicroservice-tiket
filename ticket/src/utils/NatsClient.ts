@@ -1,25 +1,25 @@
 import nats, { Stan } from "node-nats-streaming";
 class NatsClient {
-  private _client?: Stan;
+  private _stan?: Stan;
 
-  get client() {
-    if (!this._client) throw new Error("Cannot access NATS client before connecting");
-    return this._client;
+  get stan() {
+    if (!this._stan) throw new Error("Cannot access NATS stan before connecting");
+    return this._stan;
   }
 
   connect(clusterId: string, clientId: string, url: string) {
-    this._client = nats.connect(clusterId, clientId, { url });
+    this._stan = nats.connect(clusterId, clientId, { url });
 
     return new Promise<void>((resolve, reject) => {
-      this.client.on("connect", () => {
+      this.stan.on("connect", () => {
         console.log("Connected to NATS");
         resolve();
       });
-      this.client.on("error", (err) => {
+      this.stan.on("error", (err) => {
         reject(err);
       });
     });
-    
+
   }
 }
 

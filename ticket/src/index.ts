@@ -8,6 +8,16 @@ const start = async () => {
   if (!process.env.MONGO_URI) throw new Error("MONGO_URL must be defind");
   try {
     await natsClient.connect("ticketing", "testingaj", "http://nats-srv:4222");
+    natsClient.stan.on("close", () => {
+      console.log("NATS connection close");
+      process.exit();
+    });
+    process.on("SIGINT", () => {
+      natsClient.stan.close();
+    });
+    process.on("SIGTERM", () => {
+      natsClient.stan.close();
+    });
     await mongoose.connect(process.env.MONGO_URI, {
       auth: {
         username: "root",
