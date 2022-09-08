@@ -82,4 +82,5 @@ it("creates a ticket with valid inputs", async () => {
   expect(tickets.length).toEqual(1);
   expect(tickets[0].price).toEqual(20);
   expect(tickets[0].title).toEqual(title);
+  // expect(natsClient.stan).toHaveBeenCalled();
 });

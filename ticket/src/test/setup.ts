@@ -9,6 +9,8 @@ declare global {
   var signin: () => Promise<string[]>;
 }
 
+jest.mock("../utils/NatsClient.ts")
+
 let mongo: MongoMemoryServer | null = null;
 beforeAll(async () => {
   process.env.JWT_KEY = "asdfasdf";
