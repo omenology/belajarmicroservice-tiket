@@ -26,7 +26,7 @@ router.put(
     new TicketUpdatedPublisher(natsClient.stan).publish({
       id: ticket.id,
       title: ticket.title,
-      pric: ticket.price,
+      price: ticket.price,
       userId: ticket.userId,
     });
 
