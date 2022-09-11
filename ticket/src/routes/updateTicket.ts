@@ -2,6 +2,8 @@ import { Router, Request, Response } from "express";
 import { body } from "express-validator";
 import { requestValidation, isAuth, ErrorNotFound, ErrorBadRequest } from "@omnlgy/common";
 import { Ticket } from "../models/ticket";
+import { TicketUpdatedPublisher } from "../events/publishers/TicketUpdatedPublisher";
+import { natsClient } from "../utils/NatsClient";
 
 const router = Router({ mergeParams: true });
 
@@ -20,6 +22,13 @@ router.put(
 
     ticket.set({ title, price });
     await ticket.save();
+
+    new TicketUpdatedPublisher(natsClient.stan).publish({
+      id: ticket.id,
+      title: ticket.title,
+      pric: ticket.price,
+      userId: ticket.userId,
+    });
 
     res.status(200).json({
       data: {
