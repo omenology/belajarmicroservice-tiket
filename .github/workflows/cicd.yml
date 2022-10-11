@@ -27,11 +27,18 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         
-    - name: Build and push
+    - name: Build and push auth service
       uses: docker/build-push-action@v3
       with:
         context: ./auth
         push: true
         tags: omenology/auth:latest
+      
+    - name: Build and push order service
+      uses: docker/build-push-action@v3
+      with:
+        context: ./order
+        push: true
+        tags: omenology/order:latest
       
       
