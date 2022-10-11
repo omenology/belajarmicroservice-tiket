@@ -41,4 +41,18 @@ jobs:
         push: true
         tags: omenology/order:latest
       
+    - name: Build and push ticket service
+      uses: docker/build-push-action@v3
+      with:
+        context: ./ticket
+        push: true
+        tags: omenology/ticket:latest
+        
+    - name: Build and push client service
+      uses: docker/build-push-action@v3
+      with:
+        context: ./client/ticketing
+        push: true
+        tags: omenology/client:latest
+      
       
