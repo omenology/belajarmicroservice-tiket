@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: asia.gcr.io/belajar-microservice/client
+          image: omenology/client:latest
 
 ---
 apiVersion: v1

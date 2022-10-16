@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: order
-          image: asia.gcr.io/belajar-microservice/order
+          image: omenology/order:latest
           env:
             - name: MONGO_URI
               value: mongodb://order-mongo-srv:27017

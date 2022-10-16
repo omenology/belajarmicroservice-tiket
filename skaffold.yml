@@ -3,12 +3,12 @@ kind: Config
 metadata:
   name: ticket
 build:
-  # local:
-  #   push: false
-  googleCloudBuild:
-    projectId: belajar-microservice
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectId: belajar-microservice
   artifacts:
-    - image: asia.gcr.io/belajar-microservice/auth
+    - image: omenology/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -16,7 +16,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: asia.gcr.io/belajar-microservice/client
+    - image: omenology/client
       context: client/ticketing
       docker:
         dockerfile: Dockerfile
@@ -25,7 +25,7 @@ build:
           - "**/*.ts"
           - "**/*.tsx"
           - "**/*.css"
-    - image: asia.gcr.io/belajar-microservice/ticket
+    - image: omenology/ticket
       context: ticket
       docker:
         dockerfile: Dockerfile
@@ -33,7 +33,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: asia.gcr.io/belajar-microservice/order
+    - image: omenology/order
       context: order
       docker:
         dockerfile: Dockerfile
@@ -45,5 +45,5 @@ build:
 deploy:
   kubectl:
     manifests:
-      - infra/k8s/*.yml
+      - ./infra/k8s/*.yml
 # kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf

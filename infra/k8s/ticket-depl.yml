@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ticket
-          image: asia.gcr.io/belajar-microservice/ticket
+          image: omenology/ticket:latest
           env:
             - name: MONGO_URI
               value: mongodb://ticket-mongo-srv:27017

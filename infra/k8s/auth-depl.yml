@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: asia.gcr.io/belajar-microservice/auth
+          image: omenology/auth:latest
           env:
             - name: MONGO_URI
               value: mongodb://auth-mongo-srv:27017
