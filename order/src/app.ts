@@ -3,7 +3,7 @@ import "express-async-errors";
 import cookieSession from "cookie-session";
 
 import { errorHandler, ErrorNotFound } from "@omnlgy/common";
-// import router from "./routes";
+import router from "./routes";
 
 const app: Express = express();
 app.set("trust proxy", true);
@@ -12,7 +12,7 @@ app.set("trust proxy", true);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// cookie
+// cookie config
 app.use(
   cookieSession({
     secure: process.env.NODE_ENV !== "test",
@@ -21,15 +21,13 @@ app.use(
 );
 
 // routes enrty
-// app.use(router);
+app.use(router);
 
 // route not found
 app.all("*", async () => {
-  console.log("tiket")
   throw new ErrorNotFound();
 });
 
-// error handler
 app.use(errorHandler);
 
 export default app;

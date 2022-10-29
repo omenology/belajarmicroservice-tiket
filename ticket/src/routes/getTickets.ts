@@ -12,16 +12,12 @@ router.get("/api/tickets", async (req: Request, res: Response) => {
       self: "/api/tickets",
     },
     data: (await tickets).map((ticket) => {
-      const id = ticket.id;
       return {
         type: "ticket",
         links: {
-          self: "/api/tickets/" + id,
+          self: "/api/tickets/" + ticket.id
         },
-        attributes: {
-          id,
-          ...ticket,
-        },
+        attributes: ticket,
       };
     }),
   });
