@@ -11,7 +11,7 @@ const router = Router({ mergeParams: true });
 const EXPIRATION_WINDOW_SECOUNDS = 15 * 60;
 
 router.post(
-  "/api/tickets",
+  "/",
   isAuth,
   [
     body("ticketId")
@@ -24,7 +24,7 @@ router.post(
     const { ticketId } = req.body;
 
     const ticket = await Ticket.findById(ticketId);
-    if (!ticket) throw new ErrorBadRequest("Ticket is not found");
+    if (!ticket) throw new ErrorNotFound("Ticket is not found");
 
     const isTicketReserved = await ticket.isReserved();
     if (isTicketReserved) throw new ErrorBadRequest("Ticket is already reserved");
