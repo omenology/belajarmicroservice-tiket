@@ -38,7 +38,7 @@ router.post(
       status: OrderStatus.Created,
       expiresAt: expiration,
     });
-    await order.save;
+    await order.save();
 
     res.status(201).json({
       data: {
