@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 
 import { Order, OrderStatus } from "../models/order";
 import { Ticket } from "../models/ticket";
+import { natsClient } from "../utils/NatsClient";
+import { OrderCreatedPublisher } from "../events/publishers/OrderCreatedPublisher";
 
 const router = Router({ mergeParams: true });
 
@@ -39,6 +41,17 @@ router.post(
       expiresAt: expiration,
     });
     await order.save();
+
+    new OrderCreatedPublisher(natsClient.stan).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      expiresAt: order.expiresAt.toISOString(),
+      ticket: {
+        id: ticket.id,
+        price: ticket.price,
+      },
+    });
 
     res.status(201).json({
       data: {

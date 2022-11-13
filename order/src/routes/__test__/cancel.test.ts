@@ -3,8 +3,9 @@ import request from "supertest";
 import app from "../../app";
 import { Order, OrderStatus } from "../../models/order";
 import { Ticket } from "../../models/ticket";
+import { natsClient } from "../../utils/NatsClient";
 
-it("marks an order as canceled", async () => {
+it("marks an order as canceled and publis event", async () => {
   const ticket = Ticket.build({
     title: "ticket",
     price: 10,
@@ -20,4 +21,6 @@ it("marks an order as canceled", async () => {
   const updatedOrder = await Order.findById(order.data.id);
 
   expect(updatedOrder!.status).toEqual(OrderStatus.Cancelled);
+
+  expect(natsClient.stan.publish).toHaveBeenCalled();
 });

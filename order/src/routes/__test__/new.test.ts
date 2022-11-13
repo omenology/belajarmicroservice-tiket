@@ -4,6 +4,7 @@ import request from "supertest";
 import app from "../../app";
 import { Order, OrderStatus } from "../../models/order";
 import { Ticket } from "../../models/ticket";
+import { natsClient } from "../../utils/NatsClient";
 
 it("returns an err if the ticket doesn't exist", async () => {
   const ticketId = new mongoose.Types.ObjectId().toString();
@@ -36,7 +37,7 @@ it("returns an err if the ticket already have reserved", async () => {
     .expect(400);
 });
 
-it("reserves a ticket", async () => {
+it("reserves a ticket and publis event", async () => {
   const ticket = Ticket.build({
     title: "con",
     price: 20,
@@ -48,4 +49,6 @@ it("reserves a ticket", async () => {
     .set("Cookie", await global.signin())
     .send({ ticketId: ticket.id })
     .expect(201);
+
+  expect(natsClient.stan.publish).toHaveBeenCalled();
 });
