@@ -17,7 +17,7 @@ router.post(
     body("ticketId")
       .notEmpty()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
-      .withMessage("TicketId must be provided"),
+      .withMessage("Ticket id format is not valid"),
   ],
   requestValidation,
   async (req: Request, res: Response) => {

@@ -18,7 +18,7 @@ router.patch("/:orderId", isAuth, async (req: Request, res: Response) => {
   res.status(200).json({
     type: "oder",
     links: {
-      self: "api/orders/" + req.params.id,
+      self: "api/orders/" + req.params.orderId,
     },
     attributes: order,
   });
