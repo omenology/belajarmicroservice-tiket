@@ -1,6 +1,8 @@
 import app from "./app";
 import mongoose from "mongoose";
 import { natsClient } from "./utils/NatsClient";
+import { TicketCreatedListener } from "./events/listeners/TicketCreatedListener";
+import { TicketUpdatedListener } from "./events/listeners/TicketUpdatedListener";
 
 const PORT = process.env.PORT || 3000;
 const start = async () => {
@@ -21,6 +23,10 @@ const start = async () => {
     process.on("SIGTERM", () => {
       natsClient.stan.close();
     });
+
+    new TicketCreatedListener(natsClient.stan).listen();
+    new TicketUpdatedListener(natsClient.stan).listen();
+
     await mongoose.connect(process.env.MONGO_URI, {
       auth: {
         username: "root",

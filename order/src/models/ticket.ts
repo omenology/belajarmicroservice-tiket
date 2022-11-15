@@ -3,6 +3,7 @@ import { Order } from "./order";
 import { OrderStatus } from "@omnlgy/common";
 
 interface ticketAttr {
+  id: string;
   title: string;
   price: number;
 }
@@ -41,7 +42,11 @@ const ticketSchema = new Schema(
 );
 
 ticketSchema.statics.build = (attrs: ticketAttr) => {
-  return new Ticket(attrs);
+  return new Ticket({
+    _id: attrs.id,
+    title: attrs.title,
+    price: attrs.price,
+  });
 };
 
 ticketSchema.methods.isReserved = async function (): Promise<Boolean> {
