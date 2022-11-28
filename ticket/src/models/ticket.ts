@@ -1,4 +1,5 @@
 import { Schema, model, Document, Model } from "mongoose";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 interface ticketAttr {
   title: string;
@@ -12,6 +13,7 @@ interface ticketDocument extends Document {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
+  version: number;
 }
 
 interface ticketModel extends Model<ticketDocument> {
@@ -37,14 +39,15 @@ const ticketSchema = new Schema(
     timestamps: true,
     toJSON: {
       transform(doc, ret) {
-        ret.id = ret._id
+        ret.id = ret._id;
         delete ret._id;
-
       },
     },
   }
 );
 
+ticketSchema.set("versionKey", "version");
+ticketSchema.plugin(updateIfCurrentPlugin);
 ticketSchema.statics.build = (attrs: ticketAttr) => {
   return new Ticket(attrs);
 };
