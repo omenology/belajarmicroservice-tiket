@@ -554,10 +554,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@omnlgy/common@^1.0.4":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@omnlgy/common/-/common-1.0.8.tgz#8c1af86b17ea1514e6c82fd82bcdf7fd835be742"
-  integrity sha512-paJMd7M4hZEb6drleGYDRWHzM7Nq3zwreDkm+geBBpue6a+CEp4HpC0KWNASSCqSSgYvNPRVeLnOoqxClP1Ycg==
+"@omnlgy/common@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@omnlgy/common/-/common-1.0.13.tgz#17273f072d38a2938728243e3470e204cfa557cf"
+  integrity sha512-bPK++d6OPCx/qEylTT3OWDRIICPl8VQJk6AZ3zk/BUVjIoEcnDCMyJR1MpzhT1TUvjJ6Sp2jjTVeC7jaXU+Nhw==
   dependencies:
     "@types/cookie-session" "^2.0.44"
     "@types/express" "^4.17.13"
@@ -1706,9 +1706,9 @@ globals@^11.1.0:
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
 google-protobuf@^3.11.2:
-  version "3.21.0"
-  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.21.0.tgz#8dfa3fca16218618d373d414d3c1139e28034d6e"
-  integrity sha512-byR7MBTK4tZ5PZEb+u5ZTzpt4SfrTxv5682MjPlHN16XeqgZE2/8HOIWeiXe8JKnT9OVbtBGhbq8mtvkK8cd5g==
+  version "3.21.2"
+  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.21.2.tgz#4580a2bea8bbb291ee579d1fefb14d6fa3070ea4"
+  integrity sha512-3MSOYFO5U9mPGikIYCzK0SaThypfGgS6bHqrUGXG3DPHCrb+txNqeEcns1W0lkGfk0rCyNXm7xB9rMxnCiZOoA==
 
 graceful-fs@^4.2.9:
   version "4.2.10"
