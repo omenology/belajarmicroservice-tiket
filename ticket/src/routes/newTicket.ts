@@ -20,14 +20,15 @@ router.post(
       userId: req.decoded?.id!,
     });
     await ticket.save();
-    
+
     new TicketCreatedPublisher(natsClient.stan).publish({
       id: ticket.id,
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,
+      version: ticket.version,
     });
-    
+
     res.status(201).json({
       data: {
         type: "ticket",

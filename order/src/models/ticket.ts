@@ -1,6 +1,8 @@
 import { Schema, model, Document, Model } from "mongoose";
+import { OrderStatus, EventTicketUpdated } from "@omnlgy/common";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
+
 import { Order } from "./order";
-import { OrderStatus } from "@omnlgy/common";
 
 interface ticketAttr {
   id: string;
@@ -12,9 +14,11 @@ export interface ticketDocument extends Document {
   title: string;
   price: number;
   isReserved(): Promise<boolean>;
+  version: number;
 }
 interface ticketModel extends Model<ticketDocument> {
   build(attrs: ticketAttr): ticketDocument;
+  findByIdAndPreviousVersion(dataEvent: EventTicketUpdated["data"]): Promise<ticketDocument | null>;
 }
 
 const ticketSchema = new Schema(
@@ -41,6 +45,16 @@ const ticketSchema = new Schema(
   }
 );
 
+ticketSchema.set("versionKey", "version");
+
+ticketSchema.plugin(updateIfCurrentPlugin);
+
+ticketSchema.statics.findByIdAndPreviousVersion = (dataEvent: EventTicketUpdated["data"]) => {
+  return Ticket.findOne({
+    _id: dataEvent.id,
+    version: dataEvent.version - 1,
+  });
+};
 ticketSchema.statics.build = (attrs: ticketAttr) => {
   return new Ticket({
     _id: attrs.id,

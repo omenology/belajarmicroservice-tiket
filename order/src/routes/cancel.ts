@@ -22,6 +22,7 @@ router.patch("/:orderId", isAuth, async (req: Request, res: Response) => {
     ticket: {
       id: order.ticket.id,
     },
+    version:order.version
   });
 
   res.status(200).json({
