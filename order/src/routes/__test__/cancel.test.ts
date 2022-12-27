@@ -1,4 +1,5 @@
 import request from "supertest";
+import mongoose from "mongoose";
 
 import app from "../../app";
 import { Order, OrderStatus } from "../../models/order";
@@ -7,6 +8,7 @@ import { natsClient } from "../../utils/NatsClient";
 
 it("marks an order as canceled and publis event", async () => {
   const ticket = Ticket.build({
+    id: new mongoose.Types.ObjectId().toString(),
     title: "ticket",
     price: 10,
   });

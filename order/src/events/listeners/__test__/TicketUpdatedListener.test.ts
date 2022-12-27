@@ -35,7 +35,7 @@ const setup = async () => {
   return { listener, data, msg, ticket };
 };
 
-it("fins, update, and save ticket", async () => {
+it("finds, update, and save ticket", async () => {
   const { listener, data, msg, ticket } = await setup();
 
   await listener.onMessage(data, msg);
@@ -53,4 +53,14 @@ it("acks the messages", async () => {
   await listener.onMessage(data, msg);
 
   expect(msg.ack).toHaveBeenCalled();
+});
+it("dosen't call ack function if the event has a skipped version", async () => {
+  const { listener, data, msg } = await setup();
+  data.version = data.version + 1;
+
+  try {
+    await listener.onMessage(data, msg);
+  } catch (error) {}
+
+  expect(msg.ack).not.toHaveBeenCalled();
 });
