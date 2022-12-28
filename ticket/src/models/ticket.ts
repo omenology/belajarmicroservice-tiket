@@ -5,12 +5,14 @@ interface ticketAttr {
   title: string;
   price: number;
   userId: string;
+  orderId?: string;
 }
 
 interface ticketDocument extends Document {
   title: string;
   price: number;
   userId: string;
+  orderId?: string;
   createdAt: Date;
   updatedAt: Date;
   version: number;
@@ -33,6 +35,9 @@ const ticketSchema = new Schema(
     userId: {
       type: String,
       required: true,
+    },
+    orderId: {
+      type: String,
     },
   },
   {

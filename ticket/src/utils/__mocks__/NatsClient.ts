@@ -1,7 +1,7 @@
 export const natsClient = {
   stan: {
-    publish: (subject: string, data: string, cb: () => void) => {
+    publish: jest.fn().mockImplementation((subject: string, data: string, cb: () => void) => {
       cb();
-    },
+    }),
   },
 };
