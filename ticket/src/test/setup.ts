@@ -1,9 +1,6 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
-import request from "supertest";
 import jwt from "jsonwebtoken";
-
-import app from "../app";
 
 declare global {
   var signin: () => Promise<string[]>;
@@ -15,10 +12,14 @@ let mongo: MongoMemoryServer | null = null;
 beforeAll(async () => {
   process.env.JWT_KEY = "asdfasdf";
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
-  mongo = await MongoMemoryServer.create();
-  const mongoUri = mongo.getUri();
-  await mongoose.connect(mongoUri);
+  try {
+    mongo = await MongoMemoryServer.create();
+    const mongoUri = mongo.getUri();
+    await mongoose.connect(mongoUri);
+    
+  } catch (error) {
+    console.log("-=-=-=-=-=-=-=-=-=-",error)
+  }
 });
 
 beforeEach(async () => {
