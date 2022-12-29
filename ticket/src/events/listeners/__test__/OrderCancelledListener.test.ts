@@ -1,31 +1,32 @@
 import mongoose from "mongoose";
 import { Message } from "node-nats-streaming";
-import { EventOrderCreated, OrderStatus } from "@omnlgy/common";
+import { EventOrderCancelled, OrderStatus } from "@omnlgy/common";
 
-import { OrderCreatedListener } from "../OrderCreatedListener";
+import { OrderCancelledListener } from "../OrderCancelledListener";
 import { Ticket } from "../../../models/ticket";
 import { natsClient } from "../../../utils/NatsClient";
 
 const setup = async () => {
-  const listener = new OrderCreatedListener(natsClient.stan);
+  const listener = new OrderCancelledListener(natsClient.stan);
 
+  const orderId = new mongoose.Types.ObjectId().toString();
   const ticket = Ticket.build({
     title: "ticket1",
     price: 10,
     userId: "userid",
   });
 
+  ticket.set({
+    orderId,
+  });
+
   await ticket.save();
 
-  const data: EventOrderCreated["data"] = {
-    id: new mongoose.Types.ObjectId().toString(),
-    status: OrderStatus.Created,
-    userId: "userid",
-    expiresAt: "232323",
+  const data: EventOrderCancelled["data"] = {
+    id: orderId,
     version: 0,
     ticket: {
       id: ticket!.id,
-      price: ticket!.price,
     },
   };
 
@@ -45,7 +46,7 @@ it("sets the orderId of the ticket", async () => {
 
   const updatedTicket = await Ticket.findById(ticket.id);
 
-  expect(updatedTicket!.orderId).toEqual(data.id);
+  expect(updatedTicket!.orderId).toBeUndefined()
 });
 
 it("acks the messages", async () => {

@@ -1,6 +1,9 @@
-import app from "./app";
 import mongoose from "mongoose";
+
+import app from "./app";
 import { natsClient } from "./utils/NatsClient";
+import { OrderCreatedListener } from "./events/listeners/OrderCreatedListener";
+import { OrderCancelledListener } from "./events/listeners/OrderCancelledListener";
 
 const PORT = process.env.PORT || 3000;
 const start = async () => {
@@ -11,6 +14,7 @@ const start = async () => {
   if (!process.env.NATS_URL) throw new Error("MONGO_URL must be defind");
   try {
     await natsClient.connect(process.env.NATS_CLUSTER_ID, process.env.NATS_CLIENT_ID, process.env.NATS_URL);
+
     natsClient.stan.on("close", () => {
       console.log("NATS connection close");
       process.exit();
@@ -21,6 +25,7 @@ const start = async () => {
     process.on("SIGTERM", () => {
       natsClient.stan.close();
     });
+
     await mongoose.connect(process.env.MONGO_URI, {
       auth: {
         username: "root",
@@ -28,12 +33,15 @@ const start = async () => {
       },
       dbName: "ticket",
     });
-    console.log("Connected to MongoDB");
+
+    new OrderCreatedListener(natsClient.stan).listen();
+    new OrderCancelledListener(natsClient.stan).listen();
+
     app.listen(PORT, () => {
       console.log(`app listening on ${PORT} | last restart : ${new Date()}`);
     });
   } catch (err) {
-    console.log(err);
+    throw err
   }
 };
 

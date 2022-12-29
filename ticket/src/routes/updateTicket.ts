@@ -16,8 +16,9 @@ router.put(
     const { title, price } = req.body;
 
     const ticket = await Ticket.findById(req.params.id);
-    if (!ticket) throw new ErrorNotFound();
 
+    if (!ticket) throw new ErrorNotFound();
+    if (ticket?.orderId) throw new ErrorBadRequest("reserverd ticket can not edited", 401);
     if (ticket.userId != req.decoded?.id) throw new ErrorBadRequest("Unauthorized", 401);
 
     ticket.set({ title, price });

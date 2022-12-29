@@ -1,6 +1,8 @@
 import request from "supertest";
-import app from "../../app";
 import mongoose from "mongoose";
+
+import app from "../../app";
+import { Ticket } from "../../models/ticket";
 
 it("returns a 404 if the provided id does not exist", async () => {
   const id = new mongoose.Types.ObjectId().toString();
@@ -26,10 +28,13 @@ it("returns a 401 if the user is not authenticated", async () => {
 });
 
 it("returns a 401 if the user does not own the ticket", async () => {
-  const response = await request(app).post("/api/tickets").set("Cookie", await global.signin()).send({
-    title: "asldkfj",
-    price: 20,
-  });
+  const response = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", await global.signin())
+    .send({
+      title: "asldkfj",
+      price: 20,
+    });
 
   await request(app)
     .put(`/api/tickets/${response.body.data.id}`)
@@ -87,6 +92,33 @@ it("updates the ticket provided valid inputs", async () => {
 
   const ticketResponse = await request(app).get(`/api/tickets/${response.body.data.id}`).send();
 
-//   expect(ticketResponse.body.title).toEqual("new title");
-//   expect(ticketResponse.body.price).toEqual(100);
+  //   expect(ticketResponse.body.title).toEqual("new title");
+  //   expect(ticketResponse.body.price).toEqual(100);
+});
+
+it("rejects updating if the ticket has been reserved", async () => {
+  const token = await global.signin()
+
+  const response = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", token)
+    .send({
+      title: "asldkfj",
+      price: 20,
+    });
+
+  const ticket = await Ticket.findById(response.body.data.id);
+
+  ticket!.set({ orderId: new mongoose.Types.ObjectId().toString() });
+
+  await ticket!.save();
+
+  await request(app)
+    .put(`/api/tickets/${response.body.data.id}`)
+    .set("Cookie", token)
+    .send({
+      title: "alskdjflskjdf",
+      price: 1000,
+    })
+    .expect(401);
 });
