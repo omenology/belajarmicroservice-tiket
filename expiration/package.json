@@ -1,0 +1,32 @@
+{
+  "name": "expiration",
+  "version": "1.0.0",
+  "description": "expiration service",
+  "main": "src/index.ts",
+  "author": "omn",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "test": "jest --watchAll --no-cache"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.5",
+    "jest": "^28.1.3",
+    "mongodb-memory-server": "^8.7.2",
+    "nodemon": "^2.0.19",
+    "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "@omnlgy/common": "^1.0.15",
+    "bullmq": "^3.5.1"
+  }
+}
