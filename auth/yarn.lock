@@ -548,10 +548,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@omnlgy/common@^1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@omnlgy/common/-/common-1.0.15.tgz#18fff66ae0ef97818b82e9e7c1eb1d216d9dfe2c"
-  integrity sha512-K3GZGV1zdLGwplkkGjR0zEPbz+7oRCZo7g9JGo8cTur85BL6/G5SL9blTjQtOfvzv1PrzsMPAUgd/2dxALfNaw==
+"@omnlgy/common@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@omnlgy/common/-/common-1.0.17.tgz#ffd1de8d97c912ed95fc918015b3123e5e1287de"
+  integrity sha512-fC5GnSBBye4k0Ceyvjf7B2aEfjuZ+oSoRT+CcpP+z8AYKorO2W6eFTQrk2sPYS2BXcnaTnsdSvoUjP2enZrSPg==
   dependencies:
     "@types/cookie-session" "^2.0.44"
     "@types/express" "^4.17.13"

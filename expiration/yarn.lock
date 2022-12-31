@@ -1336,10 +1336,10 @@
   resolved "https://registry.yarnpkg.com/@msgpackr-extract/msgpackr-extract-win32-x64/-/msgpackr-extract-win32-x64-2.2.0.tgz#016d855b6bc459fd908095811f6826e45dd4ba64"
   integrity sha512-XrC0JzsqQSvOyM3t04FMLO6z5gCuhPE6k4FXuLK5xf52ZbdvcFe1yBmo7meCew9B8G2f0T9iu9t3kfTYRYROgA==
 
-"@omnlgy/common@^1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@omnlgy/common/-/common-1.0.15.tgz#18fff66ae0ef97818b82e9e7c1eb1d216d9dfe2c"
-  integrity sha512-K3GZGV1zdLGwplkkGjR0zEPbz+7oRCZo7g9JGo8cTur85BL6/G5SL9blTjQtOfvzv1PrzsMPAUgd/2dxALfNaw==
+"@omnlgy/common@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@omnlgy/common/-/common-1.0.17.tgz#ffd1de8d97c912ed95fc918015b3123e5e1287de"
+  integrity sha512-fC5GnSBBye4k0Ceyvjf7B2aEfjuZ+oSoRT+CcpP+z8AYKorO2W6eFTQrk2sPYS2BXcnaTnsdSvoUjP2enZrSPg==
   dependencies:
     "@types/cookie-session" "^2.0.44"
     "@types/express" "^4.17.13"
