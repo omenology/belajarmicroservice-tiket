@@ -49,6 +49,14 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: omenology/payment
+      context: payment
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
 
 deploy:
   kubectl:
